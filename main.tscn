@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dr5lg7yo4sqd7"]
+
+[ext_resource type="Script" path="res://Multiplayer/MultiplayerClient.cs" id="1_2q44m"]
+[ext_resource type="PackedScene" uid="uid://bpgka2igkkigb" path="res://Multiplayer/matchmaking_ui.tscn" id="1_ivthm"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Client" type="Node" parent="."]
+script = ExtResource("1_2q44m")
+
+[node name="matchmaking_ui" parent="." node_paths=PackedStringArray("MultiplayerClient") instance=ExtResource("1_ivthm")]
+layout_mode = 1
+size_flags_vertical = 0
+MultiplayerClient = NodePath("../Client")

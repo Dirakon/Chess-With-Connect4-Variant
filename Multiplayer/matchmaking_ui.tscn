@@ -1,0 +1,97 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpgka2igkkigb"]
+
+[ext_resource type="Script" path="res://Multiplayer/MatchmakingUi.cs" id="1_uaw8i"]
+
+[node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("LogsTextBox", "RoomCodeTextBox", "MaxMovesTextBox", "LogsSegment", "SettingsSegment", "StartSegment", "ModeSelectorSegment", "BackSegment")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uaw8i")
+WebsocketMatchmakingServerUrl = "ws://matchmakingServer.crabdance.com:9080"
+LogsTextBox = NodePath("VBoxContainer/Logs")
+RoomCodeTextBox = NodePath("VBoxContainer/ModeSelector/JoinRoomPart/RoomCode")
+MaxMovesTextBox = NodePath("VBoxContainer/SettingsPart/MaxMovesSetting/Value")
+LogsSegment = NodePath("VBoxContainer/Logs")
+SettingsSegment = NodePath("VBoxContainer/SettingsPart")
+StartSegment = NodePath("VBoxContainer/Start")
+ModeSelectorSegment = NodePath("VBoxContainer/ModeSelector")
+BackSegment = NodePath("VBoxContainer/BackPart")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="BackPart" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/BackPart"]
+layout_mode = 2
+text = "Back"
+
+[node name="ModeSelector" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CreateRoomButton" type="Button" parent="VBoxContainer/ModeSelector"]
+layout_mode = 2
+text = "Create Room"
+
+[node name="SpaceFiller" type="HBoxContainer" parent="VBoxContainer/ModeSelector"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinRoomPart" type="HBoxContainer" parent="VBoxContainer/ModeSelector"]
+layout_mode = 2
+
+[node name="JoinRoomButton" type="Button" parent="VBoxContainer/ModeSelector/JoinRoomPart"]
+layout_mode = 2
+text = "Join Room"
+
+[node name="RoomCode" type="LineEdit" parent="VBoxContainer/ModeSelector/JoinRoomPart"]
+layout_mode = 2
+placeholder_text = "Room code"
+expand_to_text_length = true
+
+[node name="Logs" type="TextEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="SettingsPart" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsPart"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="MaxMovesSetting" type="HBoxContainer" parent="VBoxContainer/SettingsPart"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsPart/MaxMovesSetting"]
+layout_mode = 2
+text = "Max moves:"
+
+[node name="Value" type="LineEdit" parent="VBoxContainer/SettingsPart/MaxMovesSetting"]
+layout_mode = 2
+placeholder_text = "15"
+expand_to_text_length = true
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Start game"
+
+[connection signal="pressed" from="VBoxContainer/BackPart/BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/ModeSelector/CreateRoomButton" to="." method="OnCreateRoomButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/ModeSelector/JoinRoomPart/JoinRoomButton" to="." method="OnJoinRoomButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="OnStartButtonPressed"]

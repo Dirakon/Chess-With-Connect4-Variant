@@ -1,0 +1,8 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Non-HTML WebRTC plugin
+webrtc
+
+# IDE specific ignores
+.idea
