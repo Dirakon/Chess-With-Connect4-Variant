@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crak8qg7natgi"
-path="res://.godot/imported/W_Rook.png-5acbdd48cc0b7dbbf4c61366fda58d95.ctex"
+uid="uid://u8qjvsmys0yw"
+path="res://.godot/imported/tile003.png-b7542a9d4568d4368457b072656912f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/W_Rook.png"
-dest_files=["res://.godot/imported/W_Rook.png-5acbdd48cc0b7dbbf4c61366fda58d95.ctex"]
+source_file="res://Sprites/tile003.png"
+dest_files=["res://.godot/imported/tile003.png-b7542a9d4568d4368457b072656912f3.ctex"]
 
 [params]
 

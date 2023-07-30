@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deru0rbyf37km"
-path="res://.godot/imported/B_Bishop.png-4cbc30ca0ad0022e3b5404e91c7fd9fb.ctex"
+uid="uid://dpyne44decnfo"
+path="res://.godot/imported/W_Knight.png-65eab82a9bebc471b0d3f429f4125efb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/B_Bishop.png"
-dest_files=["res://.godot/imported/B_Bishop.png-4cbc30ca0ad0022e3b5404e91c7fd9fb.ctex"]
+source_file="res://Sprites/W_Knight.png"
+dest_files=["res://.godot/imported/W_Knight.png-65eab82a9bebc471b0d3f429f4125efb.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

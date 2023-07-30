@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpihav4mra2mf"
-path="res://.godot/imported/board_plain_05.png-199b69196913db0e034eb7a0c526201a.ctex"
+uid="uid://deru0rbyf37km"
+path="res://.godot/imported/B_Bishop.png-cc84151adea699adf57b014a45e9fbca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/board_plain_05.png"
-dest_files=["res://.godot/imported/board_plain_05.png-199b69196913db0e034eb7a0c526201a.ctex"]
+source_file="res://Sprites/B_Bishop.png"
+dest_files=["res://.godot/imported/B_Bishop.png-cc84151adea699adf57b014a45e9fbca.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://is2soergv32k"
-path="res://.godot/imported/B_Rook.png-78fa71315582929a580036ee871bc5fa.ctex"
+uid="uid://cpihav4mra2mf"
+path="res://.godot/imported/board_plain_05.png-9905325af1fc92b5b4d6400fa9a222c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/B_Rook.png"
-dest_files=["res://.godot/imported/B_Rook.png-78fa71315582929a580036ee871bc5fa.ctex"]
+source_file="res://Sprites/board_plain_05.png"
+dest_files=["res://.godot/imported/board_plain_05.png-9905325af1fc92b5b4d6400fa9a222c3.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvk44w8er3mpj"
-path="res://.godot/imported/W_Queen.png-a1b9f5a599b80e2f85c23ee7f201f430.ctex"
+uid="uid://tyxpkc36m8r5"
+path="res://.godot/imported/tile001.png-a90e9bf5ec1bd6c8cf7a4f5d5522145b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/W_Queen.png"
-dest_files=["res://.godot/imported/W_Queen.png-a1b9f5a599b80e2f85c23ee7f201f430.ctex"]
+source_file="res://Sprites/tile001.png"
+dest_files=["res://.godot/imported/tile001.png-a90e9bf5ec1bd6c8cf7a4f5d5522145b.ctex"]
 
 [params]
 

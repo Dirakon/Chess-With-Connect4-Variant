@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cioo532dxsuo5"
-path="res://.godot/imported/circle_innards.png-986bba72676226fb3606fbc4a1076cb0.ctex"
+uid="uid://5jn3eycxsrk"
+path="res://.godot/imported/W_Bishop.png-81fc55b146c1e0a299fb1446b5d520bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/circle_innards.png"
-dest_files=["res://.godot/imported/circle_innards.png-986bba72676226fb3606fbc4a1076cb0.ctex"]
+source_file="res://Sprites/W_Bishop.png"
+dest_files=["res://.godot/imported/W_Bishop.png-81fc55b146c1e0a299fb1446b5d520bb.ctex"]
 
 [params]
 

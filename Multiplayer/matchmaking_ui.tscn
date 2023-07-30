@@ -67,6 +67,7 @@ size_flags_vertical = 3
 editable = false
 
 [node name="SettingsPart" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/SettingsPart"]

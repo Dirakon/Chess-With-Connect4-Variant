@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://15qkaqbgw0g"
-path="res://.godot/imported/W_Pawn.png-ac385447e2e573c23dcfef9e37569511.ctex"
+uid="uid://cioo532dxsuo5"
+path="res://.godot/imported/circle_innards.png-4e0cf9637640e38f0f9822e3cae285c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/W_Pawn.png"
-dest_files=["res://.godot/imported/W_Pawn.png-ac385447e2e573c23dcfef9e37569511.ctex"]
+source_file="res://Sprites/circle_innards.png"
+dest_files=["res://.godot/imported/circle_innards.png-4e0cf9637640e38f0f9822e3cae285c0.ctex"]
 
 [params]
 

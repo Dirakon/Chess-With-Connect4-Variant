@@ -1,13 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dr5lg7yo4sqd7"]
+[gd_scene load_steps=6 format=3 uid="uid://dr5lg7yo4sqd7"]
 
 [ext_resource type="Script" path="res://Multiplayer/MultiplayerClient.cs" id="1_2q44m"]
 [ext_resource type="PackedScene" uid="uid://bpgka2igkkigb" path="res://Multiplayer/matchmaking_ui.tscn" id="1_ivthm"]
 [ext_resource type="Script" path="res://Main.cs" id="1_xp5rf"]
-[ext_resource type="PackedScene" uid="uid://02rbh7ej6pes" path="res://ChessboardColumn.tscn" id="4_rbh3j"]
-[ext_resource type="Texture2D" uid="uid://deru0rbyf37km" path="res://Assets/B_Bishop.png" id="5_fywsv"]
-[ext_resource type="Texture2D" uid="uid://cpihav4mra2mf" path="res://Assets/board_plain_05.png" id="5_geylx"]
+[ext_resource type="PackedScene" uid="uid://dng1g0lmmhr4g" path="res://game.tscn" id="4_tpubq"]
+[ext_resource type="Texture2D" uid="uid://deru0rbyf37km" path="res://Sprites/B_Bishop.png" id="6_d6hxj"]
 
-[node name="main" type="Control" node_paths=PackedStringArray("ChessboardColumns", "Game", "MatchmakingUi")]
+[node name="main" type="Control" node_paths=PackedStringArray("Game", "MatchmakingUi")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xp5rf")
-ChessboardColumns = [NodePath("Game/GridContainer/Column"), NodePath("Game/GridContainer/Column2"), NodePath("Game/GridContainer/Column3"), NodePath("Game/GridContainer/Column4"), NodePath("Game/GridContainer/Column5"), NodePath("Game/GridContainer/Column6"), NodePath("Game/GridContainer/Column7"), NodePath("Game/GridContainer/Column8")]
 Game = NodePath("Game")
 MatchmakingUi = NodePath("matchmaking_ui")
 
@@ -28,91 +26,10 @@ size_flags_vertical = 0
 Main = NodePath("..")
 MultiplayerClient = NodePath("../Client")
 
-[node name="Game" type="Control" parent="."]
-visible = false
+[node name="Game" parent="." instance=ExtResource("4_tpubq")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer2" type="HBoxContainer" parent="Game"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 33.0
-offset_bottom = -37.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="LeftBorder" type="ColorRect" parent="Game/GridContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(1, 1, 1, 0)
-
-[node name="TextureRect" type="TextureRect" parent="Game/GridContainer2"]
-layout_mode = 2
-texture = ExtResource("5_geylx")
-expand_mode = 3
-
-[node name="RightBorder" type="ColorRect" parent="Game/GridContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-color = Color(1, 1, 1, 0)
-
-[node name="GridContainer" type="GridContainer" parent="Game"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 251.0
-offset_top = -2.0
-offset_right = -252.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 10
-
-[node name="LeftBorder" type="ColorRect" parent="Game/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(1, 1, 1, 0)
-
-[node name="Column" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column2" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column3" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column4" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column5" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column6" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column7" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="Column8" parent="Game/GridContainer" instance=ExtResource("4_rbh3j")]
-layout_mode = 2
-
-[node name="RightBorder" type="ColorRect" parent="Game/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(1, 1, 1, 0)
 
 [node name="BBishop" type="Sprite2D" parent="."]
 position = Vector2(332.5, 295)
 scale = Vector2(12.1875, 12.1875)
-texture = ExtResource("5_fywsv")
+texture = ExtResource("6_d6hxj")

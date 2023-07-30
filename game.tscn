@@ -1,0 +1,91 @@
+[gd_scene load_steps=4 format=3 uid="uid://dng1g0lmmhr4g"]
+
+[ext_resource type="Script" path="res://Game.cs" id="1_fpjj5"]
+[ext_resource type="Texture2D" uid="uid://cpihav4mra2mf" path="res://Sprites/board_plain_05.png" id="2_wxcy5"]
+[ext_resource type="PackedScene" uid="uid://02rbh7ej6pes" path="res://ChessboardColumn.tscn" id="3_h8e0b"]
+
+[node name="Game" type="Control" node_paths=PackedStringArray("ChessboardColumns", "ChessPieces")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fpjj5")
+ChessboardColumns = [NodePath("GridContainer/Column"), NodePath("GridContainer/Column2"), NodePath("GridContainer/Column3"), NodePath("GridContainer/Column4"), NodePath("GridContainer/Column5"), NodePath("GridContainer/Column6"), NodePath("GridContainer/Column7"), NodePath("GridContainer/Column8")]
+ChessPieces = [NodePath("")]
+
+[node name="GridContainer2" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 33.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LeftBorder" type="ColorRect" parent="GridContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="TextureRect" type="TextureRect" parent="GridContainer2"]
+layout_mode = 2
+texture = ExtResource("2_wxcy5")
+expand_mode = 3
+
+[node name="RightBorder" type="ColorRect" parent="GridContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 251.0
+offset_top = -2.0
+offset_right = -252.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 10
+
+[node name="LeftBorder" type="ColorRect" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="Column" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column2" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column3" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column4" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column5" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column6" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column7" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="Column8" parent="GridContainer" instance=ExtResource("3_h8e0b")]
+layout_mode = 2
+
+[node name="RightBorder" type="ColorRect" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
