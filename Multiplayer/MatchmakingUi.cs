@@ -24,13 +24,14 @@ public partial class MatchmakingUi : Control
 
     [Export] public Control LogsSegment;
     [Export] public TextEdit LogsTextBox;
+    [Export] public Main Main;
     [Export] public LineEdit MaxMovesTextBox;
+    [Export] public CheckBox HostPlaysChess;
     [Export] public Control ModeSelectorSegment;
     [Export] public MultiplayerClient MultiplayerClient;
     [Export] public LineEdit RoomCodeTextBox;
     [Export] public Control SettingsSegment;
     [Export] public Control StartSegment;
-    [Export] public Main Main;
     [Export] public string WebsocketMatchmakingServerUrl;
 
     private void ResetUi()
@@ -223,15 +224,15 @@ public partial class MatchmakingUi : Control
         GD.Print(msg);
         LogsTextBox.Text += $"{msg}\n";
     }
-    
 
-    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false)]
+
+    [Rpc(CallLocal = false)]
     public void OnHostStartedGame(string settingsAsJson)
     {
         var settings = JsonConvert.DeserializeObject<Settings>(settingsAsJson);
-        Main.StartGame(settings, isHost:false);
+        Main.StartGame(settings, false);
     }
-    
+
     public void OnStartButtonPressed()
     {
         var numberOfPeers = Multiplayer.GetPeers().Length;
@@ -244,10 +245,11 @@ public partial class MatchmakingUi : Control
         var settings = new Settings(
             MaxMoves: int.Parse(string.IsNullOrWhiteSpace(MaxMovesTextBox.Text)
                 ? MaxMovesTextBox.PlaceholderText
-                : MaxMovesTextBox.Text)
+                : MaxMovesTextBox.Text),
+            HostPlaysChess: HostPlaysChess.ButtonPressed
         );
         Rpc(MethodName.OnHostStartedGame, JsonConvert.SerializeObject(settings));
         MultiplayerClient.SealLobby();
-        Main.StartGame(settings, isHost:true);
+        Main.StartGame(settings, true);
     }
 }

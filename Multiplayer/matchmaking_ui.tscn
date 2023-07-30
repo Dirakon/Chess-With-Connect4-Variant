@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Multiplayer/MatchmakingUi.cs" id="1_uaw8i"]
 
-[node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("BackSegment", "LogsSegment", "LogsTextBox", "MaxMovesTextBox", "ModeSelectorSegment", "RoomCodeTextBox", "SettingsSegment", "StartSegment")]
+[node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("BackSegment", "LogsSegment", "LogsTextBox", "MaxMovesTextBox", "HostPlaysChess", "ModeSelectorSegment", "RoomCodeTextBox", "SettingsSegment", "StartSegment")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ BackSegment = NodePath("VBoxContainer/BackPart")
 LogsSegment = NodePath("VBoxContainer/Logs")
 LogsTextBox = NodePath("VBoxContainer/Logs")
 MaxMovesTextBox = NodePath("VBoxContainer/SettingsPart/MaxMovesSetting/Value")
+HostPlaysChess = NodePath("VBoxContainer/SettingsPart/HostPlaysChessSetting/Value")
 ModeSelectorSegment = NodePath("VBoxContainer/ModeSelector")
 RoomCodeTextBox = NodePath("VBoxContainer/ModeSelector/JoinRoomPart/RoomCode")
 SettingsSegment = NodePath("VBoxContainer/SettingsPart")
@@ -66,7 +67,6 @@ size_flags_vertical = 3
 editable = false
 
 [node name="SettingsPart" type="VBoxContainer" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/SettingsPart"]
@@ -76,6 +76,7 @@ horizontal_alignment = 1
 
 [node name="MaxMovesSetting" type="HBoxContainer" parent="VBoxContainer/SettingsPart"]
 layout_mode = 2
+alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer/SettingsPart/MaxMovesSetting"]
 layout_mode = 2
@@ -85,6 +86,17 @@ text = "Max moves:"
 layout_mode = 2
 placeholder_text = "15"
 expand_to_text_length = true
+
+[node name="HostPlaysChessSetting" type="HBoxContainer" parent="VBoxContainer/SettingsPart"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/SettingsPart/HostPlaysChessSetting"]
+layout_mode = 2
+text = "Does host play chess:"
+
+[node name="Value" type="CheckBox" parent="VBoxContainer/SettingsPart/HostPlaysChessSetting"]
+layout_mode = 2
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 visible = false

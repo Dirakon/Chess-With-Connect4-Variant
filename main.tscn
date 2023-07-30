@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://deru0rbyf37km" path="res://Assets/B_Bishop.png" id="5_fywsv"]
 [ext_resource type="Texture2D" uid="uid://cpihav4mra2mf" path="res://Assets/board_plain_05.png" id="5_geylx"]
 
-[node name="main" type="Control" node_paths=PackedStringArray("MatchmakingUi", "Game", "ChessboardColumns")]
+[node name="main" type="Control" node_paths=PackedStringArray("ChessboardColumns", "Game", "MatchmakingUi")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,20 +15,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xp5rf")
-MatchmakingUi = NodePath("matchmaking_ui")
-Game = NodePath("Game")
 ChessboardColumns = [NodePath("Game/GridContainer/Column"), NodePath("Game/GridContainer/Column2"), NodePath("Game/GridContainer/Column3"), NodePath("Game/GridContainer/Column4"), NodePath("Game/GridContainer/Column5"), NodePath("Game/GridContainer/Column6"), NodePath("Game/GridContainer/Column7"), NodePath("Game/GridContainer/Column8")]
+Game = NodePath("Game")
+MatchmakingUi = NodePath("matchmaking_ui")
 
 [node name="Client" type="Node" parent="."]
 script = ExtResource("1_2q44m")
 
-[node name="matchmaking_ui" parent="." node_paths=PackedStringArray("MultiplayerClient", "Main") instance=ExtResource("1_ivthm")]
+[node name="matchmaking_ui" parent="." node_paths=PackedStringArray("Main", "MultiplayerClient") instance=ExtResource("1_ivthm")]
 layout_mode = 1
 size_flags_vertical = 0
-MultiplayerClient = NodePath("../Client")
 Main = NodePath("..")
+MultiplayerClient = NodePath("../Client")
 
 [node name="Game" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
