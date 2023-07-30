@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://018o07uhv13s"]
+
+[ext_resource type="Texture2D" uid="uid://cioo532dxsuo5" path="res://Assets/circle_innards.png" id="2_qkn2m"]
+
+[node name="TextureRect" type="TextureRect"]
+size_flags_vertical = 3
+texture = ExtResource("2_qkn2m")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_qkn2m")
+expand_mode = 3
+stretch_mode = 5

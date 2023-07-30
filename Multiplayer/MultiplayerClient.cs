@@ -1,7 +1,8 @@
-using System;
 using Godot;
 using Godot.Collections;
 using GodotArray = Godot.Collections.Array;
+
+namespace ChessWithConnect4.Multiplayer;
 
 public partial class MultiplayerClient : WebRtcClient
 {

@@ -1,5 +1,8 @@
 using System;
 using Godot;
+using Newtonsoft.Json;
+
+namespace ChessWithConnect4.Multiplayer;
 
 internal enum MatchmakingState
 {
@@ -27,7 +30,7 @@ public partial class MatchmakingUi : Control
     [Export] public LineEdit RoomCodeTextBox;
     [Export] public Control SettingsSegment;
     [Export] public Control StartSegment;
-
+    [Export] public Main Main;
     [Export] public string WebsocketMatchmakingServerUrl;
 
     private void ResetUi()
@@ -114,16 +117,6 @@ public partial class MatchmakingUi : Control
 
         _currentState = MatchmakingState.LeavingRoom;
         Render();
-    }
-
-    public void OnStartButtonPressed()
-    {
-        var numberOfPeers = Multiplayer.GetPeers().Length;
-        if (numberOfPeers != 1)
-        {
-            AddLog($"[ERROR] Invalid number of peers! Required 1, got {numberOfPeers}");
-        }
-        // TODO: close matchmaking UI, initiate game with settings
     }
 
 
@@ -230,10 +223,31 @@ public partial class MatchmakingUi : Control
         GD.Print(msg);
         LogsTextBox.Text += $"{msg}\n";
     }
+    
 
+    [Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false)]
+    public void OnHostStartedGame(string settingsAsJson)
+    {
+        var settings = JsonConvert.DeserializeObject<Settings>(settingsAsJson);
+        Main.StartGame(settings, isHost:false);
+    }
+    
+    public void OnStartButtonPressed()
+    {
+        var numberOfPeers = Multiplayer.GetPeers().Length;
+        if (numberOfPeers != 1)
+        {
+            AddLog($"[ERROR] Invalid number of peers! Required 1, got {numberOfPeers}");
+            return;
+        }
 
-    // public void _on_ping_pressed()
-    // {
-    // 	Rpc(MethodName.Ping, Random.Shared.NextSingle());
-    // }
+        var settings = new Settings(
+            MaxMoves: int.Parse(string.IsNullOrWhiteSpace(MaxMovesTextBox.Text)
+                ? MaxMovesTextBox.PlaceholderText
+                : MaxMovesTextBox.Text)
+        );
+        Rpc(MethodName.OnHostStartedGame, JsonConvert.SerializeObject(settings));
+        MultiplayerClient.SealLobby();
+        Main.StartGame(settings, isHost:true);
+    }
 }

@@ -2,6 +2,8 @@ using System;
 using Godot;
 using Godot.Collections;
 
+namespace ChessWithConnect4.Multiplayer;
+
 public enum Message
 {
     Join,

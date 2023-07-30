@@ -1,0 +1,121 @@
+[gd_scene load_steps=3 format=3 uid="uid://02rbh7ej6pes"]
+
+[ext_resource type="PackedScene" uid="uid://018o07uhv13s" path="res://CircleTexture.tscn" id="1_d81np"]
+[ext_resource type="Script" path="res://ChessboardColumn.cs" id="1_kj0o1"]
+
+[node name="Column" type="Control" node_paths=PackedStringArray("OrderedClickables", "OrderedHighlighters")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_kj0o1")
+OrderedClickables = [NodePath("FunctionalColumn/Button"), NodePath("FunctionalColumn/Button2"), NodePath("FunctionalColumn/Button3"), NodePath("FunctionalColumn/Button4"), NodePath("FunctionalColumn/Button5"), NodePath("FunctionalColumn/Button6"), NodePath("FunctionalColumn/Button7"), NodePath("FunctionalColumn/Button8")]
+OrderedHighlighters = [NodePath("VisualColumn/TextureRect"), NodePath("VisualColumn/TextureRect2"), NodePath("VisualColumn/TextureRect3"), NodePath("VisualColumn/TextureRect4"), NodePath("VisualColumn/TextureRect5"), NodePath("VisualColumn/TextureRect6"), NodePath("VisualColumn/TextureRect7"), NodePath("VisualColumn/TextureRect8")]
+
+[node name="VisualColumn" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VisualSlot" type="ColorRect" parent="VisualColumn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="TextureRect" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect2" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect3" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect4" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect5" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect6" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect7" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="TextureRect8" parent="VisualColumn" instance=ExtResource("1_d81np")]
+layout_mode = 2
+
+[node name="VisualSlot9" type="ColorRect" parent="VisualColumn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="FunctionalColumn" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpperBorder" type="ColorRect" parent="FunctionalColumn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)
+
+[node name="Button" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button2" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button3" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button4" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button5" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button6" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button7" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button8" type="Button" parent="FunctionalColumn"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DownBorder" type="ColorRect" parent="FunctionalColumn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0)

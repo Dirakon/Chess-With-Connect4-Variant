@@ -3,6 +3,8 @@
 Lobby/matchmaking system is based on example from [godot-demo-projects](https://github.com/godotengine/godot-demo-projects/tree/master),
 specifically the _networking/webrtc_signaling_ example.
 
+Chess-related assets are taken from [DANI MACCARI's pixel chess pack](https://dani-maccari.itch.io/pixel-chess).
+
 # How to run
 
 To run locally (on non-HTML environment), WebRTC plugin is needed. You can automatically download it via
