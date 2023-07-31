@@ -1,14 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ChessWithConnect4;
 
-
-
-public enum ChessPieceType {Pawn, Bishop, Queen, Knight, Rook, King}
-
+public enum ChessPieceType
+{
+    Pawn,
+    Bishop,
+    Queen,
+    Knight,
+    Rook,
+    King
+}
 
 public static class ChessPieceExtensions
 {
@@ -18,10 +22,7 @@ public static class ChessPieceExtensions
         {
             case ChessPieceType.Pawn: // TODO: implement promotion
             {
-                if (currentPosition.Y == Game.MaxY)
-                {
-                    return Array.Empty<Move>();
-                }
+                if (currentPosition.Y == Game.MaxY) return Array.Empty<Move>();
                 var positionAbove = currentPosition with {Y = currentPosition.Y + 1};
                 var moveOneAbove =
                     new Move(positionAbove,
@@ -33,13 +34,13 @@ public static class ChessPieceExtensions
                     {
                         moveOneAbove
                     };
-                
+
                 var positionTwoAbove = currentPosition with {Y = currentPosition.Y + 2};
                 var moveTwoAbove = new Move(
                     positionTwoAbove,
                     new[] {positionAbove, positionTwoAbove}
                 );
-                
+
                 return new[]
                 {
                     moveOneAbove,
@@ -56,12 +57,12 @@ public static class ChessPieceExtensions
                     new(1, 1)
                 };
                 var allPotentialMovesByDirection = directionIncrements.Select(directionIncrement =>
-                    InfiniteRangeFrom(1).Select(iterations => 
+                    InfiniteRangeFrom(1).Select(iterations =>
                         new Move(
-                            Position: currentPosition + directionIncrement * iterations, 
-                            PositionsRequiredToBeFree: Enumerable
+                            currentPosition + directionIncrement * iterations,
+                            Enumerable
                                 .Range(1, iterations)
-                                .Select(i => currentPosition +  directionIncrement * i).ToArray()
+                                .Select(i => currentPosition + directionIncrement * i).ToArray()
                         )
                     )
                 ).ToArray();
@@ -106,13 +107,13 @@ public static class ChessPieceExtensions
                     new(1, 0)
                 };
                 var allPotentialMovesByDirection = directionIncrements.Select(directionIncrement =>
-                    InfiniteRangeFrom(1).Select(iterations => 
+                    InfiniteRangeFrom(1).Select(iterations =>
                         new Move(
-                            Position: currentPosition + directionIncrement * iterations, 
-                            PositionsRequiredToBeFree: Enumerable
+                            currentPosition + directionIncrement * iterations,
+                            Enumerable
                                 .Range(1, iterations)
-                                .Select(i => currentPosition +  directionIncrement * i).ToArray()
-                            )
+                                .Select(i => currentPosition + directionIncrement * i).ToArray()
+                        )
                     )
                 ).ToArray();
                 return allPotentialMovesByDirection.SelectMany(potentialMovesInOneDirection =>
@@ -120,7 +121,7 @@ public static class ChessPieceExtensions
                     )
                     .ToArray();
             }
-            case ChessPieceType.King:  // TODO: implement castling
+            case ChessPieceType.King: // TODO: implement castling
             {
                 var offsets = new Position[]
                 {
@@ -146,17 +147,16 @@ public static class ChessPieceExtensions
             }
         }
     }
+
     private static IEnumerable<int> InfiniteRangeFrom(int start)
     {
-        int counter = start;
+        var counter = start;
         while (true)
-        {
             unchecked
             {
                 yield return counter;
                 counter++;
             }
-        }
     }
 }
 
@@ -166,10 +166,21 @@ public readonly record struct Position(int X, int Y)
 {
     public bool IsOnBoard()
     {
-        return X >= 0  && X <= Game.MaxX && Y >= 0 && Y <= Game.MaxY;
+        return X >= 0 && X <= Game.MaxX && Y >= 0 && Y <= Game.MaxY;
     }
+
     public static Position operator +(Position a, Position b)
-        => new Position(a.X + b.X, a.Y + b.Y);
+    {
+        return new Position(a.X + b.X, a.Y + b.Y);
+    }
+
+    public static Position operator -(Position a, Position b)
+    {
+        return new Position(a.X - b.X, a.Y - b.Y);
+    }
+
     public static Position operator *(Position a, int times)
-        => new Position(a.X * times, a.Y * times);
+    {
+        return new Position(a.X * times, a.Y * times);
+    }
 }

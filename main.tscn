@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dr5lg7yo4sqd7"]
+[gd_scene load_steps=5 format=3 uid="uid://dr5lg7yo4sqd7"]
 
 [ext_resource type="Script" path="res://Multiplayer/MultiplayerClient.cs" id="1_2q44m"]
 [ext_resource type="PackedScene" uid="uid://bpgka2igkkigb" path="res://Multiplayer/matchmaking_ui.tscn" id="1_ivthm"]
 [ext_resource type="Script" path="res://Main.cs" id="1_xp5rf"]
 [ext_resource type="PackedScene" uid="uid://dng1g0lmmhr4g" path="res://game.tscn" id="4_tpubq"]
-[ext_resource type="Texture2D" uid="uid://deru0rbyf37km" path="res://Sprites/B_Bishop.png" id="6_d6hxj"]
 
 [node name="main" type="Control" node_paths=PackedStringArray("Game", "MatchmakingUi")]
 layout_mode = 3
@@ -29,8 +28,3 @@ MultiplayerClient = NodePath("../Client")
 [node name="Game" parent="." instance=ExtResource("4_tpubq")]
 visible = false
 layout_mode = 1
-
-[node name="BBishop" type="Sprite2D" parent="."]
-position = Vector2(332.5, 295)
-scale = Vector2(12.1875, 12.1875)
-texture = ExtResource("6_d6hxj")

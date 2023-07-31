@@ -21,12 +21,12 @@ public partial class MatchmakingUi : Control
 {
     private MatchmakingState _currentState = MatchmakingState.SelectingMode;
     [Export] public Control BackSegment;
+    [Export] public CheckBox HostPlaysChess;
 
     [Export] public Control LogsSegment;
     [Export] public TextEdit LogsTextBox;
     [Export] public Main Main;
     [Export] public LineEdit MaxMovesTextBox;
-    [Export] public CheckBox HostPlaysChess;
     [Export] public Control ModeSelectorSegment;
     [Export] public MultiplayerClient MultiplayerClient;
     [Export] public LineEdit RoomCodeTextBox;
@@ -243,10 +243,10 @@ public partial class MatchmakingUi : Control
         }
 
         var settings = new Settings(
-            MaxMoves: int.Parse(string.IsNullOrWhiteSpace(MaxMovesTextBox.Text)
+            int.Parse(string.IsNullOrWhiteSpace(MaxMovesTextBox.Text)
                 ? MaxMovesTextBox.PlaceholderText
                 : MaxMovesTextBox.Text),
-            HostPlaysChess: HostPlaysChess.ButtonPressed
+            HostPlaysChess.ButtonPressed
         );
         Rpc(MethodName.OnHostStartedGame, JsonConvert.SerializeObject(settings));
         MultiplayerClient.SealLobby();
