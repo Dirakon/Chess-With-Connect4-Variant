@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cpihav4mra2mf" path="res://Sprites/board_plain_05.png" id="2_wxcy5"]
 [ext_resource type="PackedScene" uid="uid://02rbh7ej6pes" path="res://ChessboardColumn.tscn" id="3_h8e0b"]
 
-[node name="Game" type="Control" node_paths=PackedStringArray("ChessboardColumns", "ChessPieces")]
+[node name="Game" type="Control" node_paths=PackedStringArray("ChessboardColumns")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fpjj5")
 ChessboardColumns = [NodePath("GridContainer/Column"), NodePath("GridContainer/Column2"), NodePath("GridContainer/Column3"), NodePath("GridContainer/Column4"), NodePath("GridContainer/Column5"), NodePath("GridContainer/Column6"), NodePath("GridContainer/Column7"), NodePath("GridContainer/Column8")]
-ChessPieces = [NodePath("")]
+HighlighterPotentialMoveColor = Color(0.627451, 0.0627451, 0.32549, 1)
 
 [node name="GridContainer2" type="HBoxContainer" parent="."]
 layout_mode = 1

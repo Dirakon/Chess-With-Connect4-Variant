@@ -6,6 +6,8 @@ public partial class ChessboardColumn : Control
 
     [Export] public TextureRect[] OrderedHighlighters;
 
+    [Export] public PieceSlot[] PieceSlots;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {

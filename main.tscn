@@ -27,6 +27,7 @@ Main = NodePath("..")
 MultiplayerClient = NodePath("../Client")
 
 [node name="Game" parent="." instance=ExtResource("4_tpubq")]
+visible = false
 layout_mode = 1
 
 [node name="BBishop" type="Sprite2D" parent="."]

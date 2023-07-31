@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://ChessboardColumn.cs" id="1_kj0o1"]
 [ext_resource type="PackedScene" uid="uid://c2tjft2qhb6p8" path="res://PieceSelector.tscn" id="3_5vbtb"]
 
-[node name="Column" type="Control" node_paths=PackedStringArray("OrderedClickables", "OrderedHighlighters")]
+[node name="Column" type="Control" node_paths=PackedStringArray("OrderedClickables", "OrderedHighlighters", "PieceSlots")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,7 @@ size_flags_vertical = 3
 script = ExtResource("1_kj0o1")
 OrderedClickables = [NodePath("FunctionalColumn/Button"), NodePath("FunctionalColumn/Button2"), NodePath("FunctionalColumn/Button3"), NodePath("FunctionalColumn/Button4"), NodePath("FunctionalColumn/Button5"), NodePath("FunctionalColumn/Button6"), NodePath("FunctionalColumn/Button7"), NodePath("FunctionalColumn/Button8")]
 OrderedHighlighters = [NodePath("VisualColumn/TextureRect"), NodePath("VisualColumn/TextureRect2"), NodePath("VisualColumn/TextureRect3"), NodePath("VisualColumn/TextureRect4"), NodePath("VisualColumn/TextureRect5"), NodePath("VisualColumn/TextureRect6"), NodePath("VisualColumn/TextureRect7"), NodePath("VisualColumn/TextureRect8")]
+PieceSlots = [NodePath("PieceColumn/PieceSelector"), NodePath("PieceColumn/PieceSelector2"), NodePath("PieceColumn/PieceSelector3"), NodePath("PieceColumn/PieceSelector4"), NodePath("PieceColumn/PieceSelector5"), NodePath("PieceColumn/PieceSelector6"), NodePath("PieceColumn/PieceSelector7"), NodePath("PieceColumn/PieceSelector8")]
 
 [node name="VisualColumn" type="VBoxContainer" parent="."]
 layout_mode = 1

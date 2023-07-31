@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cioo532dxsuo5" path="res://Sprites/circle_innards.png" id="1_b3ot2"]
 
 [node name="TextureRect" type="TextureRect"]
+modulate = Color(1, 1, 1, 0)
 size_flags_vertical = 3
 texture = ExtResource("1_b3ot2")
 expand_mode = 3

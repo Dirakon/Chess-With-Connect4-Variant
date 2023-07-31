@@ -34,7 +34,7 @@ public static class ChessPieceExtensions
                         moveOneAbove
                     };
                 
-                var positionTwoAbove = currentPosition with {Y = currentPosition.Y + 1};
+                var positionTwoAbove = currentPosition with {Y = currentPosition.Y + 2};
                 var moveTwoAbove = new Move(
                     positionTwoAbove,
                     new[] {positionAbove, positionTwoAbove}
@@ -162,7 +162,7 @@ public static class ChessPieceExtensions
 
 public record Move(Position Position, Position[] PositionsRequiredToBeFree);
 
-public record struct Position(int X, int Y)
+public readonly record struct Position(int X, int Y)
 {
     public bool IsOnBoard()
     {
