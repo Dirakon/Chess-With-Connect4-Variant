@@ -6,20 +6,42 @@ using ChessWithConnect4;
 using ChessWithConnect4.Multiplayer;
 using Newtonsoft.Json;
 
+public interface IPlayerGameState{}
+
+public record NonPlayable : IPlayerGameState;
+
+public record ChessPlayerChoosingPieceToMove : IPlayerGameState;
+
+public record ChessPlayerTryingToMove(Position StartPosition, Move[] PossibleChessMoves): IPlayerGameState;
+
+public record ChessPlayerAwaitingOpponentMove : IPlayerGameState;
+
+
+
+public record CheckersPlayerChoosingColumnToDrop : IPlayerGameState;
+
+public record CheckersPlayerAwaitingOpponentMove : IPlayerGameState;
+
+public static class GameStateExtensions
+{
+	public static bool IsChessPlayer(this IPlayerGameState state)
+	{
+		return state is ChessPlayerTryingToMove or ChessPlayerChoosingPieceToMove or ChessPlayerAwaitingOpponentMove;
+	}
+}
+
 public partial class Game : Control
 {
+	private IPlayerGameState _gameState = new NonPlayable();
 	public static int MaxX = 7, MinX = 0, MaxY = 7, MinY = 0;
 	private Dictionary<Position, TextureRect> _coordsToHighlighter;
 	private Dictionary<Position, PieceSlot> _coordsToPieceSlot;
 	private Dictionary<Position, ChessPieceType> _coordsToPiece;
 	private HashSet<Position> CheckerPositions = new();
 	[Export] public ChessboardColumn[] ChessboardColumns;
-	public bool IsChessPlayerTurn;
 	public int TurnsLeft;
-	public bool IsChessPlayer;
 
 	public List<TextureRect> UsedHighlighters = new();
-	public (Move[], Position)? PossibleChessMoves = null;
 	[Export] public Color HighlighterPotentialMoveColor, HighlighterDefaultColor;
 
 	public void ResetHighlighters()
@@ -46,8 +68,8 @@ public partial class Game : Control
 	{
 		var jsonSettings = JsonConvert.SerializeObject(settings);
 		GD.Print($"STARTING GAME WITH [host? {isHost}] [Settings: {jsonSettings}]");
-		IsChessPlayer = isHost? settings.HostPlaysChess : !settings.HostPlaysChess;
-		IsChessPlayerTurn = true;
+		bool isChessPlayer = isHost? settings.HostPlaysChess : !settings.HostPlaysChess;
+		_gameState = isChessPlayer ? new ChessPlayerChoosingPieceToMove() : new CheckersPlayerAwaitingOpponentMove();
 		TurnsLeft = settings.MaxMoves;
 	}
 	
@@ -114,7 +136,16 @@ public partial class Game : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	public void ChessPlayerMoved(int fromX, int fromY, int toX, int toY)
 	{
-		IsChessPlayerTurn = false;
+		switch (_gameState)
+		{
+			case CheckersPlayerChoosingColumnToDrop:
+				GD.PushWarning($"Received unexpected chess player move: from ({fromX}, {fromY}) to ({toX}, {toY})");
+				return;
+			case ChessPlayerAwaitingOpponentMove:
+				GD.PushWarning($"Somehow initiated a move while awaiting enemy move: from ({fromX}, {fromY}) to ({toX}, {toY})");
+				return;
+		}
+
 		Position fromPosition = new(fromX, fromY);
 		Position toPosition = new(toX, toY);
 		
@@ -128,6 +159,10 @@ public partial class Game : Control
 
 		HandleCheckerFall();
 		HandlePotentialCheckerWin();
+
+		_gameState = _gameState is CheckersPlayerAwaitingOpponentMove 
+			? new CheckersPlayerChoosingColumnToDrop() : 
+			new ChessPlayerAwaitingOpponentMove();
 	}
 
 	public void HandlePotentialChessWin()
@@ -143,7 +178,19 @@ public partial class Game : Control
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	public void CheckersPlayerDropped(int dropX)
 	{
-		IsChessPlayerTurn = true;
+		switch (_gameState)
+		{
+			case NonPlayable:
+				GD.PushWarning($"Trying to do something in non-playable state");
+				return;
+			case ChessPlayerTryingToMove:
+			case ChessPlayerChoosingPieceToMove:
+				GD.PushWarning($"Received unexpected chess player move: on {dropX}");
+				return;
+			case CheckersPlayerAwaitingOpponentMove:
+				GD.PushWarning($"Somehow initiated a move while awaiting enemy move: on {dropX}");
+				return;
+		}
 		
 		// TODO
 
@@ -151,6 +198,10 @@ public partial class Game : Control
 		HandlePotentialCheckerWin();
 		TurnsLeft--;
 		HandlePotentialChessWin();
+
+		_gameState = _gameState is CheckersPlayerChoosingColumnToDrop 
+			? new CheckersPlayerAwaitingOpponentMove() 
+			: new ChessPlayerChoosingPieceToMove();
 	}
 	
 	public void HandleChessMove(Position fromPosition, Position toPosition)
@@ -174,7 +225,7 @@ public partial class Game : Control
 	{
 		ResetHighlighters();
 		{
-			if (PossibleChessMoves is var (potentialMoves, initiatorPosition))
+			if (_gameState is ChessPlayerTryingToMove(var initiatorPosition, var potentialMoves))
 			{
 				Move? relevantMove = potentialMoves.FirstOrDefault(move => move.Position == clickedPosition, null);
 				if (relevantMove is { } someMove)
@@ -183,7 +234,7 @@ public partial class Game : Control
 					return;
 				}
 
-				PossibleChessMoves = null;
+				_gameState = new ChessPlayerChoosingPieceToMove();
 			}
 		}
 
@@ -191,7 +242,7 @@ public partial class Game : Control
 		if (chessPiece is { } somePiece)
 		{
 			var potentialMoves = CalculatePotentialMoves(clickedPosition, somePiece);
-			PossibleChessMoves = (potentialMoves, clickedPosition);
+			_gameState = new ChessPlayerTryingToMove(clickedPosition, potentialMoves);
 			HighlightMoves(potentialMoves);
 		}
 		
@@ -203,9 +254,11 @@ public partial class Game : Control
 
 	public void OnButtonPressed(Position clickedPosition)
 	{
-		if (IsChessPlayer && IsChessPlayerTurn)
+		if (_gameState is NonPlayable or ChessPlayerAwaitingOpponentMove or CheckersPlayerAwaitingOpponentMove)
+			return;
+		if (_gameState.IsChessPlayer())
 			HandleChessPlayerClick(clickedPosition);
-		else if (!IsChessPlayer && !IsChessPlayerTurn)
+		else
 			HandleCheckerPlayerClick(clickedPosition);
 	}
 
