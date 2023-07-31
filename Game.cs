@@ -34,12 +34,17 @@ public partial class Game : Control
 {
 	private IPlayerGameState _gameState = new NonPlayable();
 	public static int MaxX = 7, MinX = 0, MaxY = 7, MinY = 0;
+	public int MaxMoves;
 	private Dictionary<Position, TextureRect> _coordsToHighlighter;
 	private Dictionary<Position, PieceSlot> _coordsToPieceSlot;
 	private Dictionary<Position, ChessPieceType> _coordsToPiece;
-	private HashSet<Position> CheckerPositions = new();
+	private HashSet<Position> CheckerPositions;
 	[Export] public ChessboardColumn[] ChessboardColumns;
 	public int TurnsLeft;
+
+	[Export] public Control ChessPlayerWinScreen, CheckersPlayerWinScreen;
+	[Export] public Control[] HostOnlyViews;
+	[Export] public Label TurnsLeftBox;
 
 	public List<TextureRect> UsedHighlighters = new();
 	[Export] public Color HighlighterPotentialMoveColor, HighlighterDefaultColor;
@@ -62,15 +67,34 @@ public partial class Game : Control
 			UsedHighlighters.Add(highlighter);
 		}
 	}
-	
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = false)]
+	public void ResetGame(string serializedSettings)
+	{
+		var settings = JsonConvert.DeserializeObject<Settings>(serializedSettings);
+		StartGame(settings, false);
+	}
 
 	public void StartGame(Settings settings, bool isHost)
 	{
+		foreach (var hostOnlyView in HostOnlyViews)
+		{
+			hostOnlyView.Visible = isHost;
+		}
+		ResetHighlighters();
+		CheckerPositions = new();
+		InitChessPieces();
+		
 		var jsonSettings = JsonConvert.SerializeObject(settings);
 		GD.Print($"STARTING GAME WITH [host? {isHost}] [Settings: {jsonSettings}]");
 		bool isChessPlayer = isHost? settings.HostPlaysChess : !settings.HostPlaysChess;
 		_gameState = isChessPlayer ? new ChessPlayerChoosingPieceToMove() : new CheckersPlayerAwaitingOpponentMove();
 		TurnsLeft = settings.MaxMoves;
+		MaxMoves = settings.MaxMoves;
+
+		ChessPlayerWinScreen.Visible = false;
+		CheckersPlayerWinScreen.Visible = false;
+		RenderTurnsLeft();
 	}
 	
 	// Called when the node enters the scene tree for the first time.
@@ -95,11 +119,14 @@ public partial class Game : Control
 		).ToArray();
 
 		foreach (var (position, button) in coordsWithButton) button.Pressed += () => OnButtonPressed(position);
-		InitChessPieces();
 	}
 
 	public void InitChessPieces()
 	{
+		foreach (var (_, pieceSlot) in _coordsToPieceSlot)
+		{
+			pieceSlot.RenderChessPiece(null);
+		}
 		var chessPieces = new[]
 		{
 			(new Position(0,0), ChessPieceType.Rook),
@@ -123,14 +150,57 @@ public partial class Game : Control
 		}
 	}
 
-	public void HandleCheckerFall()
+	public void HandleCheckersFall()
 	{
-		// TODO
+		foreach (var position in CheckerPositions.OrderBy(checkerPosition => checkerPosition.Y).ToArray())
+		{
+			var currentPosition = position;
+			while (currentPosition.Y > 0)
+			{
+				var positionLower = currentPosition with {Y = currentPosition.Y - 1 };
+				if (_coordsToPiece.ContainsKey(positionLower) || CheckerPositions.Contains(positionLower))
+					break;
+				CheckerPositions.Remove(currentPosition);
+				_coordsToPieceSlot[currentPosition].RenderChessPiece(null);
+				currentPosition = positionLower;
+				CheckerPositions.Add(currentPosition);
+				_coordsToPieceSlot[currentPosition].RenderChecker();
+			}
+		}
 	}
 
-	public void HandlePotentialCheckerWin()
+	public void HandlePotentialCheckersWin()
 	{
-		// TODO
+		const int inARowToWin = 4;
+		bool verticalLineWin = CheckerPositions
+			.Any(checkerPosition =>
+				CheckerPositions
+					.Where(position2 => 
+						position2.X == checkerPosition.X
+						&& position2.Y > checkerPosition.Y
+						&& checkerPosition.Y + inARowToWin > position2.Y
+						)
+					.Take(inARowToWin - 1)
+					.Count() == inARowToWin - 1
+			);
+		bool horizontalLineWin = CheckerPositions
+			.Any(checkerPosition =>
+				CheckerPositions
+					.Where(position2 => 
+						position2.Y == checkerPosition.Y
+						&& position2.X > checkerPosition.X
+						&& checkerPosition.X + inARowToWin > position2.X
+					)
+					.Take(inARowToWin - 1)
+					.Count() == inARowToWin - 1
+			);
+
+
+		if (verticalLineWin || horizontalLineWin)
+		{
+			_gameState = new NonPlayable();
+			CheckersPlayerWinScreen.Visible = true;
+		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
@@ -157,8 +227,10 @@ public partial class Game : Control
 		_coordsToPiece[toPosition] = startPiece;
 		_coordsToPieceSlot[toPosition].RenderChessPiece(startPiece);
 
-		HandleCheckerFall();
-		HandlePotentialCheckerWin();
+		HandleCheckersFall();
+		HandlePotentialCheckersWin();
+		if (_gameState is NonPlayable)
+			return;
 
 		_gameState = _gameState is CheckersPlayerAwaitingOpponentMove 
 			? new CheckersPlayerChoosingColumnToDrop() : 
@@ -167,12 +239,16 @@ public partial class Game : Control
 
 	public void HandlePotentialChessWin()
 	{
-		// TODO
+		if (TurnsLeft <= 0)
+		{
+			_gameState = new NonPlayable();
+			ChessPlayerWinScreen.Visible = true;
+		}
 	}
 
 	public void RenderTurnsLeft()
 	{
-		// TODO
+		TurnsLeftBox.Text = TurnsLeft.ToString();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
@@ -191,13 +267,23 @@ public partial class Game : Control
 				GD.PushWarning($"Somehow initiated a move while awaiting enemy move: on {dropX}");
 				return;
 		}
-		
-		// TODO
 
-		HandleCheckerFall();
-		HandlePotentialCheckerWin();
+		var dropPosition = new Position(dropX, MaxY);
+		if (_coordsToPiece.ContainsKey(dropPosition) || CheckerPositions.Contains(dropPosition))
+			return;
+
+		CheckerPositions.Add(dropPosition);
+		_coordsToPieceSlot[dropPosition].RenderChecker();
+		
+		HandleCheckersFall();
+		HandlePotentialCheckersWin();
+		if (_gameState is NonPlayable)
+			return;
 		TurnsLeft--;
+		RenderTurnsLeft();
 		HandlePotentialChessWin();
+		if (_gameState is NonPlayable)
+			return;
 
 		_gameState = _gameState is CheckersPlayerChoosingColumnToDrop 
 			? new CheckersPlayerAwaitingOpponentMove() 
@@ -260,6 +346,29 @@ public partial class Game : Control
 			HandleChessPlayerClick(clickedPosition);
 		else
 			HandleCheckerPlayerClick(clickedPosition);
+	}
+
+	private Settings GetSettingsAs(bool isChessPlayer)
+	{
+		return new Settings
+		(
+			HostPlaysChess: isChessPlayer,
+			MaxMoves: MaxMoves
+		);
+	}
+
+	public void OnRestartAsCheckersPressed()
+	{
+		var settings = GetSettingsAs(isChessPlayer: false);
+		Rpc(MethodName.ResetGame, JsonConvert.SerializeObject(settings));
+		StartGame(settings, isHost: true);
+	}
+
+	public void OnRestartAsChessPressed()
+	{
+		var settings = GetSettingsAs(isChessPlayer: true);
+		Rpc(MethodName.ResetGame, JsonConvert.SerializeObject(settings));
+		StartGame(settings, isHost: true);
 	}
 
 
