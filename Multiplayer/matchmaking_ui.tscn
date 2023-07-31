@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Multiplayer/MatchmakingUi.cs" id="1_uaw8i"]
 
-[node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("BackSegment", "LogsSegment", "LogsTextBox", "MaxMovesTextBox", "HostPlaysChess", "ModeSelectorSegment", "RoomCodeTextBox", "SettingsSegment", "StartSegment")]
+[node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("BackSegment", "HostPlaysChess", "LogsSegment", "LogsTextBox", "MaxMovesTextBox", "ModeSelectorSegment", "RoomCodeTextBox", "SettingsSegment", "StartSegment")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,10 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uaw8i")
 BackSegment = NodePath("VBoxContainer/BackPart")
+HostPlaysChess = NodePath("VBoxContainer/SettingsPart/HostPlaysChessSetting/Value")
 LogsSegment = NodePath("VBoxContainer/Logs")
 LogsTextBox = NodePath("VBoxContainer/Logs")
 MaxMovesTextBox = NodePath("VBoxContainer/SettingsPart/MaxMovesSetting/Value")
-HostPlaysChess = NodePath("VBoxContainer/SettingsPart/HostPlaysChessSetting/Value")
 ModeSelectorSegment = NodePath("VBoxContainer/ModeSelector")
 RoomCodeTextBox = NodePath("VBoxContainer/ModeSelector/JoinRoomPart/RoomCode")
 SettingsSegment = NodePath("VBoxContainer/SettingsPart")

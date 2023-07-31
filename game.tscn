@@ -17,9 +17,9 @@ script = ExtResource("1_fpjj5")
 ChessboardColumns = [NodePath("GridContainer/Column"), NodePath("GridContainer/Column2"), NodePath("GridContainer/Column3"), NodePath("GridContainer/Column4"), NodePath("GridContainer/Column5"), NodePath("GridContainer/Column6"), NodePath("GridContainer/Column7"), NodePath("GridContainer/Column8")]
 ChessPlayerWinScreen = NodePath("ChessWin")
 CheckersPlayerWinScreen = NodePath("Connect4Win")
+HighlighterPotentialMoveColor = Color(0.627451, 0.0627451, 0.32549, 1)
 HostOnlyViews = [NodePath("ChessWin/VBoxContainer/HostSettings"), NodePath("Connect4Win/VBoxContainer/HostSettings")]
 TurnsLeftBox = NodePath("HBoxContainer/TurnTimer")
-HighlighterPotentialMoveColor = Color(0.627451, 0.0627451, 0.32549, 1)
 
 [node name="GridContainer2" type="HBoxContainer" parent="."]
 layout_mode = 1
