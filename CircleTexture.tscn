@@ -8,12 +8,3 @@ size_flags_vertical = 3
 texture = ExtResource("1_b3ot2")
 expand_mode = 3
 stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("1_b3ot2")
-expand_mode = 3
-stretch_mode = 5
