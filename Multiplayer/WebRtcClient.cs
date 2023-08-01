@@ -71,7 +71,8 @@ public partial class WebRtcClient : Node
 
     public bool ParseMsg()
     {
-        var parsed = Json.ParseString(Ws.GetPacket().GetStringFromUtf8());
+        var packetRaw = Ws.GetPacket().GetStringFromUtf8();
+        var parsed = Json.ParseString(packetRaw);
         if (parsed.Obj is not Dictionary msg || !msg.ContainsKey("type") ||
             !msg.ContainsKey("id") ||
             msg["data"].Obj is not string dataString)

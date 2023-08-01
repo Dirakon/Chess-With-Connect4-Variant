@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpgka2igkkigb"]
+[gd_scene load_steps=3 format=3 uid="uid://bpgka2igkkigb"]
 
 [ext_resource type="Script" path="res://Multiplayer/MatchmakingUi.cs" id="1_uaw8i"]
+[ext_resource type="Script" path="res://Multiplayer/auto_bottom_scroller.gd" id="2_vxily"]
 
 [node name="matchmaking_ui" type="Control" node_paths=PackedStringArray("BackSegment", "HostPlaysChess", "LogsSegment", "LogsTextBox", "MaxMovesTextBox", "ModeSelectorSegment", "RoomCodeTextBox", "SettingsSegment", "StartSegment")]
 layout_mode = 3
@@ -65,6 +66,7 @@ expand_to_text_length = true
 layout_mode = 2
 size_flags_vertical = 3
 editable = false
+script = ExtResource("2_vxily")
 
 [node name="SettingsPart" type="VBoxContainer" parent="VBoxContainer"]
 visible = false
@@ -107,4 +109,5 @@ text = "Start game"
 [connection signal="pressed" from="VBoxContainer/BackPart/BackButton" to="." method="OnBackButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/ModeSelector/CreateRoomButton" to="." method="OnCreateRoomButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/ModeSelector/JoinRoomPart/JoinRoomButton" to="." method="OnJoinRoomButtonPressed"]
+[connection signal="text_changed" from="VBoxContainer/Logs" to="VBoxContainer/Logs" method="_on_text_changed"]
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="OnStartButtonPressed"]

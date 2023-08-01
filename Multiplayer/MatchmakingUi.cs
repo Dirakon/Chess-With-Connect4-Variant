@@ -223,6 +223,7 @@ public partial class MatchmakingUi : Control
     {
         GD.Print(msg);
         LogsTextBox.Text += $"{msg}\n";
+        LogsTextBox.EmitSignal("text_changed");
     }
 
 
@@ -235,10 +236,18 @@ public partial class MatchmakingUi : Control
 
     public void OnStartButtonPressed()
     {
-        var numberOfPeers = Multiplayer.GetPeers().Length;
-        if (numberOfPeers != 1)
+        if (_currentState == MatchmakingState.CreatedRoom)
         {
-            AddLog($"[ERROR] Invalid number of peers! Required 1, got {numberOfPeers}");
+            var numberOfPeers = Multiplayer.GetPeers().Length;
+            if (numberOfPeers != 1)
+            {
+                AddLog($"[ERROR] Invalid number of peers! Required 1, got {numberOfPeers}");
+                return;
+            }
+        }
+        else
+        {
+            AddLog($"[ERROR] Trying to create room in invalid state: {_currentState.ToString()}");
             return;
         }
 
@@ -249,7 +258,6 @@ public partial class MatchmakingUi : Control
             HostPlaysChess.ButtonPressed
         );
         Rpc(MethodName.OnHostStartedGame, JsonConvert.SerializeObject(settings));
-        MultiplayerClient.SealLobby();
         Main.StartGame(settings, true);
     }
 }

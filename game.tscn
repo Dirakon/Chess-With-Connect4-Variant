@@ -18,7 +18,7 @@ ChessboardColumns = [NodePath("GridContainer/Column"), NodePath("GridContainer/C
 ChessPlayerWinScreen = NodePath("ChessWin")
 CheckersPlayerWinScreen = NodePath("Connect4Win")
 HighlighterPotentialMoveColor = Color(0.627451, 0.0627451, 0.32549, 1)
-HostOnlyViews = [NodePath("ChessWin/VBoxContainer/HostSettings"), NodePath("Connect4Win/VBoxContainer/HostSettings")]
+HostOnlyViews = [NodePath("ChessWin/VBoxContainer/HostOnlyBox"), NodePath("Connect4Win/VBoxContainer/HostOnlyBox")]
 TurnsLeftBox = NodePath("HBoxContainer/TurnTimer")
 
 [node name="GridContainer2" type="HBoxContainer" parent="."]
@@ -116,7 +116,6 @@ layout_mode = 2
 text = "15"
 
 [node name="Connect4Win" type="PanelContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -149,31 +148,15 @@ texture = ExtResource("4_6a4t6")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="HostSettings" type="VBoxContainer" parent="Connect4Win/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Connect4Win/VBoxContainer/HostSettings"]
+[node name="HostOnlyBox" type="VBoxContainer" parent="Connect4Win/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Connect4Win/VBoxContainer/HostSettings/HBoxContainer2"]
+[node name="Button" type="Button" parent="Connect4Win/VBoxContainer/HostOnlyBox"]
 layout_mode = 2
-text = "restart as"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Connect4Win/VBoxContainer/HostSettings"]
-layout_mode = 2
-alignment = 1
-
-[node name="Button" type="Button" parent="Connect4Win/VBoxContainer/HostSettings/HBoxContainer3"]
-layout_mode = 2
-icon = ExtResource("4_6a4t6")
-
-[node name="Button2" type="Button" parent="Connect4Win/VBoxContainer/HostSettings/HBoxContainer3"]
-layout_mode = 2
-icon = ExtResource("5_qegjp")
+text = "Back to lobby"
 
 [node name="ChessWin" type="PanelContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -206,30 +189,12 @@ texture = ExtResource("5_qegjp")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HostSettings" type="VBoxContainer" parent="ChessWin/VBoxContainer"]
+[node name="HostOnlyBox" type="VBoxContainer" parent="ChessWin/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ChessWin/VBoxContainer/HostSettings"]
+[node name="Button" type="Button" parent="ChessWin/VBoxContainer/HostOnlyBox"]
 layout_mode = 2
-alignment = 1
+text = "Back to lobby"
 
-[node name="Label" type="Label" parent="ChessWin/VBoxContainer/HostSettings/HBoxContainer2"]
-layout_mode = 2
-text = "restart as"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="ChessWin/VBoxContainer/HostSettings"]
-layout_mode = 2
-alignment = 1
-
-[node name="Button" type="Button" parent="ChessWin/VBoxContainer/HostSettings/HBoxContainer3"]
-layout_mode = 2
-icon = ExtResource("4_6a4t6")
-
-[node name="Button2" type="Button" parent="ChessWin/VBoxContainer/HostSettings/HBoxContainer3"]
-layout_mode = 2
-icon = ExtResource("5_qegjp")
-
-[connection signal="pressed" from="Connect4Win/VBoxContainer/HostSettings/HBoxContainer3/Button" to="." method="OnRestartAsCheckersPressed"]
-[connection signal="pressed" from="Connect4Win/VBoxContainer/HostSettings/HBoxContainer3/Button2" to="." method="OnRestartAsChessPressed"]
-[connection signal="pressed" from="ChessWin/VBoxContainer/HostSettings/HBoxContainer3/Button" to="." method="OnRestartAsCheckersPressed"]
-[connection signal="pressed" from="ChessWin/VBoxContainer/HostSettings/HBoxContainer3/Button2" to="." method="OnRestartAsChessPressed"]
+[connection signal="pressed" from="Connect4Win/VBoxContainer/HostOnlyBox/Button" to="." method="BackToLobbyButtonPressed"]
+[connection signal="pressed" from="ChessWin/VBoxContainer/HostOnlyBox/Button" to="." method="BackToLobbyButtonPressed"]

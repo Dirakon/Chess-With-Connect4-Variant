@@ -8,6 +8,11 @@ public partial class Main : Control
     [Export] public Game Game;
     [Export] public MatchmakingUi MatchmakingUi;
 
+    public void BackToLobby()
+    {
+        MatchmakingUi.Visible = true;
+        Game.Visible = false;
+    }
 
     public void StartGame(Settings settings, bool isHost)
     {

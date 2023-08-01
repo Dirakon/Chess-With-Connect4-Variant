@@ -42,6 +42,8 @@ public partial class Game : Control
     [Export] public Control ChessPlayerWinScreen, CheckersPlayerWinScreen;
     [Export] public Color HighlighterPotentialMoveColor, HighlighterDefaultColor;
     [Export] public Control[] HostOnlyViews;
+
+    [Export] public Main Main;
     public int MaxMoves;
     public int TurnsLeft;
     [Export] public Label TurnsLeftBox;
@@ -65,10 +67,9 @@ public partial class Game : Control
     }
 
     [Rpc(CallLocal = false)]
-    public void ResetGame(string serializedSettings)
+    public void BackToLobby()
     {
-        var settings = JsonConvert.DeserializeObject<Settings>(serializedSettings);
-        StartGame(settings, false);
+        Main.BackToLobby();
     }
 
     public void StartGame(Settings settings, bool isHost)
@@ -378,20 +379,11 @@ public partial class Game : Control
         );
     }
 
-    public void OnRestartAsCheckersPressed()
+    public void BackToLobbyButtonPressed()
     {
-        var settings = GetSettingsAs(false);
-        Rpc(MethodName.ResetGame, JsonConvert.SerializeObject(settings));
-        StartGame(settings, true);
+        Rpc(MethodName.BackToLobby);
+        BackToLobby();
     }
-
-    public void OnRestartAsChessPressed()
-    {
-        var settings = GetSettingsAs(true);
-        Rpc(MethodName.ResetGame, JsonConvert.SerializeObject(settings));
-        StartGame(settings, true);
-    }
-
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
